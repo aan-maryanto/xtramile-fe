@@ -1,0 +1,90 @@
+<!-- Form to add or edit items -->
+<form class="container-form" (ngSubmit)="saveItem()">
+
+    <h2> Patient Form </h2>
+
+    <input type="hidden" id="id" name="pid" [(ngModel)]="currentItem.pid">
+  
+    <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="first_name" [(ngModel)]="currentItem.first_name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="last_name" [(ngModel)]="currentItem.last_name" required >
+    </div>
+
+    <div class="form-group">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" [(ngModel)]="currentItem.dob"  required >
+    </div>
+
+    <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select [(ngModel)]="currentItem.gender" name="gender" id="gender">
+            <option value="MAN" [selected]="currentItem.gender == 'MAN'">MAN</option>
+            <option value="WOMAN" [selected]="currentItem.gender == 'WOMAN'">WOMAN</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="phoneNo">Phone No:</label>
+        <input type="text" id="phoneNo" name="phoneNo" [(ngModel)]="currentItem.phone_no" required >
+    </div>
+
+    <fieldset>
+        <legend>Australian Address : </legend>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" [(ngModel)]="currentItem.australian_address.address"  required >
+        </div>
+        <div class="form-group">
+            <label for="suburb">Suburb:</label>
+            <input type="text" id="suburb" name="suburb" [(ngModel)]="currentItem.australian_address.suburb"  required >
+        </div>
+        <div class="form-group">
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" [(ngModel)]="currentItem.australian_address.state"  required >
+        </div>
+        <div class="form-group">
+            <label for="postcode">Postcode:</label>
+            <input type="text" id="postcode" name="postcode" [(ngModel)]="currentItem.australian_address.postcode"  required >
+        </div>
+    </fieldset>
+  
+    <button type="submit">{{ editMode ? 'Update' : 'Add' }}</button>
+  </form>
+
+<!-- Display table data -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date Of Birth</th>
+      <th>Gender</th>
+      <th>Australian Address</th>
+      <th>Phone No</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td>{{ item.first_name }} {{ item.last_name }}</td>
+      <td>{{ item.dob }}</td>
+      <td>{{ item.gender }}</td>
+      <td>
+        <pre>
+            <code>
+                {{ item.australian_address | json }}
+            </code>
+        </pre>
+      </td>
+      <td> {{ item.phone_no }} </td>
+      <td>
+        <button (click)="editItem(item)">Edit</button>
+        <button (click)="deleteItem(item)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
